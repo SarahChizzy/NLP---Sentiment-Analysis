@@ -56,3 +56,17 @@ sample_vec = vectorizer.transform(sample_cleaned)
 prediction = model.predict(sample_vec)
 print("Sentiment:", prediction[0])
 
+import streamlit as st
+st.title("🧠 Sentiment Analysis App")
+st.write("Enter a review and find out whether it's positive or negative!")
+
+user_input = st.text_area("Write your review here:")
+
+if st.button("Analyze"):
+    if user_input.strip() == "":
+        st.warning("Please enter a review.")
+    else:
+        cleaned = clean_text(user_input)
+        vector = vectorizer.transform([cleaned])
+        prediction = model.predict(vector)[0]
+        st.success(f"Predicted Sentiment: **{prediction.upper()}**")
